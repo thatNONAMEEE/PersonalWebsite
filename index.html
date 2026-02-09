@@ -2,45 +2,635 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <title>Meine einfache Seite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Persönliche Website – Dein Name</title>
+    <meta
+      name="description"
+      content="Persönliche Website – Kurzprofil, Erfahrung, Ausbildung und Kontakt."
+    />
+
+    <!-- Basis-Styles & Layout -->
     <style>
+      :root {
+        color-scheme: light;
+        --color-bg: #0f172a;
+        --color-surface: #0b1220;
+        --color-card: #020617;
+        --color-border: rgba(148, 163, 184, 0.25);
+        --color-accent: #38bdf8;
+        --color-accent-soft: rgba(56, 189, 248, 0.08);
+        --color-text: #e5e7eb;
+        --color-text-muted: #9ca3af;
+        --radius-lg: 1rem;
+        --shadow-soft: 0 24px 60px rgba(15, 23, 42, 0.65);
+        --shadow-header: 0 18px 40px rgba(15, 23, 42, 0.85);
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
           sans-serif;
-        margin: 0;
+        line-height: 1.6;
+        color: var(--color-text);
+        background: radial-gradient(circle at top, #1d293b 0, #020617 50%)
+          fixed;
+      }
+
+      .page-shell {
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 1.25rem 1rem;
+      }
+
+      header,
+      main,
+      footer {
+        width: 100%;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.12), transparent 55%),
+          linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+        box-shadow: var(--shadow-header);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+      }
+
+      .site-header-inner {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .identity {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: radial-gradient(circle at 0 0, #38bdf8, #0ea5e9, #0f172a);
+        box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9),
+          0 18px 35px rgba(8, 47, 73, 0.8);
+      }
+
+      .site-title-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+      }
+
+      .site-title {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: 0.03em;
+      }
+
+      .site-claim {
+        margin: 0;
+        font-size: 0.85rem;
+        color: var(--color-text-muted);
+      }
+
+      nav[aria-label="Hauptnavigation"] ul {
+        list-style: none;
+        margin: 0;
+        padding: 0.1rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.35rem;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        box-shadow: 0 14px 35px rgba(15, 23, 42, 0.7);
+      }
+
+      nav[aria-label="Hauptnavigation"] a {
+        position: relative;
+        display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: #f5f5f5;
+        padding: 0.35rem 0.9rem;
+        border-radius: 999px;
+        text-decoration: none;
+        color: var(--color-text-muted);
+        font-size: 0.83rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        border: 1px solid transparent;
+        transition: color 0.2s ease, background-color 0.2s ease,
+          border-color 0.2s ease, transform 0.15s ease;
       }
 
-      .card {
-        background: white;
-        padding: 2rem 2.5rem;
-        border-radius: 0.75rem;
-        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
-        max-width: 480px;
-        text-align: center;
+      nav[aria-label="Hauptnavigation"] a::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: radial-gradient(circle at top, rgba(56, 189, 248, 0.3), transparent 55%);
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
       }
 
-      h1 {
-        margin: 0 0 0.75rem;
-        font-size: 2rem;
+      nav[aria-label="Hauptnavigation"] a:hover,
+      nav[aria-label="Hauptnavigation"] a:focus-visible {
+        color: var(--color-accent);
+        background-color: rgba(15, 23, 42, 0.85);
+        border-color: rgba(56, 189, 248, 0.6);
+        transform: translateY(-1px);
+        outline: none;
       }
 
-      p {
+      nav[aria-label="Hauptnavigation"] a:hover::before,
+      nav[aria-label="Hauptnavigation"] a:focus-visible::before {
+        opacity: 1;
+      }
+
+      main.site-main {
+        flex: 1;
+      }
+
+      .sections {
+        display: flex;
+        flex-direction: column;
+        gap: 1.75rem;
+        padding: 1.75rem 0 2.25rem;
+      }
+
+      .section-card {
+        border-radius: var(--radius-lg);
+        background: radial-gradient(circle at 0 0, rgba(56, 189, 248, 0.12), transparent 52%),
+          radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.16), transparent 55%),
+          var(--color-card);
+        padding: 1.5rem 1.4rem;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      section h2 {
         margin: 0;
-        color: #555;
-        line-height: 1.5;
+        font-size: 1.1rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--color-text);
+      }
+
+      .lang-label-pill {
+        font-size: 0.8rem;
+        padding: 0.1rem 0.6rem;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        color: var(--color-text-muted);
+        background: linear-gradient(
+          to right,
+          rgba(15, 23, 42, 0.95),
+          rgba(15, 23, 42, 0.75)
+        );
+      }
+
+      .section-body {
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .section-intro {
+        margin: 0;
+        color: var(--color-text);
+        font-size: 0.94rem;
+      }
+
+      .lang-note {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--color-text-muted);
+      }
+
+      .entry-list {
+        margin: 0.75rem 0 0;
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .entry {
+        padding: 0.85rem 0.9rem;
+        border-radius: 0.9rem;
+        background: rgba(15, 23, 42, 0.92);
+        border: 1px solid rgba(148, 163, 184, 0.55);
+      }
+
+      .entry-title {
+        font-weight: 600;
+        margin: 0 0 0.1rem;
+        font-size: 0.95rem;
+      }
+
+      .entry-meta {
+        margin: 0 0 0.45rem;
+        font-size: 0.82rem;
+        color: var(--color-text-muted);
+      }
+
+      .entry-text {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      .entry-text + .entry-text {
+        margin-top: 0.25rem;
+      }
+
+      .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0.85rem 0 0;
+        display: grid;
+        gap: 0.45rem;
+      }
+
+      .contact-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-text-muted);
+      }
+
+      .contact-main {
+        font-size: 0.92rem;
+      }
+
+      .contact-list a {
+        color: var(--color-accent);
+        text-decoration: none;
+        position: relative;
+      }
+
+      .contact-list a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -0.12rem;
+        width: 100%;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          rgba(56, 189, 248, 0.9),
+          transparent
+        );
+        transform-origin: left;
+        transform: scaleX(0);
+        transition: transform 0.18s ease-out;
+      }
+
+      .contact-list a:hover::after,
+      .contact-list a:focus-visible::after {
+        transform: scaleX(1);
+      }
+
+      .contact-list a:hover,
+      .contact-list a:focus-visible {
+        outline: none;
+      }
+
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.35);
+        padding: 1.3rem 0 1.7rem;
+        font-size: 0.8rem;
+        color: var(--color-text-muted);
+        background: linear-gradient(
+          to top,
+          rgba(15, 23, 42, 0.98),
+          rgba(15, 23, 42, 0.9)
+        );
+      }
+
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .lang-toggle-hint {
+        font-size: 0.8rem;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      @media (min-width: 640px) {
+        .sections {
+          padding-top: 2.1rem;
+        }
+
+        .section-card {
+          padding: 1.7rem 1.7rem;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .site-title {
+          font-size: 1.5rem;
+        }
+
+        .sections {
+          gap: 2rem;
+          padding-bottom: 2.7rem;
+        }
+
+        .entry-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .entry {
+          padding: 0.95rem 1rem;
+        }
+      }
+
+      @media (prefers-reduced-transparency: reduce) {
+        .site-header {
+          backdrop-filter: none;
+        }
       }
     </style>
   </head>
   <body>
-    <main class="card">
-      <h1>Hallo 👋</h1>
-      <p>Das ist eine einfache HTML‑Seite als Startpunkt für deine Website.</p>
-    </main>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container site-header-inner">
+          <div class="identity">
+            <div class="avatar" aria-hidden="true"></div>
+            <div class="site-title-wrap">
+              <h1 class="site-title" data-lang="de">Dein Name</h1>
+              <h1 class="site-title sr-only" data-lang="en">Your Name</h1>
+              <p class="site-claim" data-lang="de">
+                Kurz-Claim auf Deutsch – z.&nbsp;B. Softwareentwickler mit Schwerpunkt Web.
+              </p>
+              <p class="site-claim" data-lang="en">
+                Short English tagline – e.g. software engineer focused on web development.
+              </p>
+            </div>
+          </div>
+          <nav aria-label="Hauptnavigation">
+            <ul>
+              <li><a href="#about">Über mich</a></li>
+              <li><a href="#experience">Erfahrung</a></li>
+              <li><a href="#education">Ausbildung</a></li>
+              <li><a href="#contact">Kontakt</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="site-main">
+        <div class="container">
+          <div class="sections">
+            <!-- Über mich -->
+            <section
+              id="about"
+              aria-labelledby="about-heading"
+              class="section-card"
+            >
+              <div class="section-header">
+                <h2 id="about-heading">Über mich / About me</h2>
+                <span class="lang-label-pill">DE / EN</span>
+              </div>
+              <div class="section-body">
+                <p class="section-intro" data-lang="de">
+                  Kurze Zusammenfassung deiner Person auf Deutsch. 3–4 Sätze, die dich,
+                  deinen Hintergrund und deine Schwerpunkte beschreiben.
+                </p>
+                <p class="lang-note" data-lang="en">
+                  Short English summary about you. 3–4 sentences that explain who you are,
+                  your background and your focus areas.
+                </p>
+              </div>
+            </section>
+
+            <!-- Berufserfahrung / Projekte -->
+            <section
+              id="experience"
+              aria-labelledby="experience-heading"
+              class="section-card"
+            >
+              <div class="section-header">
+                <h2 id="experience-heading">
+                  Berufserfahrung &amp; Projekte / Experience &amp; Projects
+                </h2>
+                <span class="lang-label-pill">DE / EN</span>
+              </div>
+              <div class="section-body">
+                <p class="section-intro" data-lang="de">
+                  Kurzer einleitender Satz zu deiner Berufserfahrung oder deinen Projekten.
+                </p>
+                <p class="lang-note" data-lang="en">
+                  Short introductory sentence about your professional experience or projects.
+                </p>
+
+                <div class="entry-list">
+                  <article class="entry">
+                    <h3 class="entry-title" data-lang="de">
+                      Beispielrolle oder Projekt – Firmenname / Projekttitel
+                    </h3>
+                    <h3 class="entry-title sr-only" data-lang="en">
+                      Sample role or project – company / project title
+                    </h3>
+                    <p class="entry-meta">
+                      <span data-lang="de">Zeitraum (z.&nbsp;B. 2023–2024) · Rolle / Position</span>
+                      <span data-lang="en">
+                        Period (e.g. 2023–2024) · Role / position
+                      </span>
+                    </p>
+                    <p class="entry-text" data-lang="de">
+                      Stichpunktartige Beschreibung deiner Aufgaben und des Tech-Stacks auf
+                      Deutsch (Platzhalter).
+                    </p>
+                    <p class="entry-text" data-lang="en">
+                      Bullet-style description of your responsibilities and tech stack in
+                      English (placeholder).
+                    </p>
+                  </article>
+
+                  <article class="entry">
+                    <h3 class="entry-title" data-lang="de">
+                      Weiteres Beispielprojekt – Projekttitel
+                    </h3>
+                    <h3 class="entry-title sr-only" data-lang="en">
+                      Additional sample project – project title
+                    </h3>
+                    <p class="entry-meta">
+                      <span data-lang="de">Zeitraum · Rolle</span>
+                      <span data-lang="en">Period · Role</span>
+                    </p>
+                    <p class="entry-text" data-lang="de">
+                      Kurze Beschreibung des Projekts, verwendete Technologien und dein
+                      Beitrag (Platzhalter).
+                    </p>
+                    <p class="entry-text" data-lang="en">
+                      Short description of the project, used technologies and your
+                      contribution (placeholder).
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <!-- Ausbildung / Studium -->
+            <section
+              id="education"
+              aria-labelledby="education-heading"
+              class="section-card"
+            >
+              <div class="section-header">
+                <h2 id="education-heading">
+                  Ausbildung &amp; Studium / Education
+                </h2>
+                <span class="lang-label-pill">DE / EN</span>
+              </div>
+              <div class="section-body">
+                <p class="section-intro" data-lang="de">
+                  Kurzer einleitender Satz zu deiner Ausbildung oder deinem Studium.
+                </p>
+                <p class="lang-note" data-lang="en">
+                  Short introductory sentence about your education.
+                </p>
+
+                <div class="entry-list">
+                  <article class="entry">
+                    <h3 class="entry-title" data-lang="de">
+                      Beispielabschluss – Hochschule / Schule / Bootcamp
+                    </h3>
+                    <h3 class="entry-title sr-only" data-lang="en">
+                      Sample degree – university / school / bootcamp
+                    </h3>
+                    <p class="entry-meta">
+                      <span data-lang="de">
+                        Zeitraum (z.&nbsp;B. 2019–2022) · Studiengang / Schwerpunkt
+                      </span>
+                      <span data-lang="en">
+                        Period (e.g. 2019–2022) · Program / focus
+                      </span>
+                    </p>
+                    <p class="entry-text" data-lang="de">
+                      Kurze Beschreibung des Abschlusses, relevanter Inhalte oder Schwerpunkte
+                      auf Deutsch (Platzhalter).
+                    </p>
+                    <p class="entry-text" data-lang="en">
+                      Short description of the degree, key topics or focus areas in English
+                      (placeholder).
+                    </p>
+                  </article>
+                </div>
+              </div>
+            </section>
+
+            <!-- Kontakt -->
+            <section
+              id="contact"
+              aria-labelledby="contact-heading"
+              class="section-card"
+            >
+              <div class="section-header">
+                <h2 id="contact-heading">Kontakt / Contact</h2>
+                <span class="lang-label-pill">DE / EN</span>
+              </div>
+              <div class="section-body">
+                <p class="section-intro" data-lang="de">
+                  Hier findest du Möglichkeiten, dich mit mir zu verbinden.
+                </p>
+                <p class="lang-note" data-lang="en">
+                  Here are some ways to get in touch with me.
+                </p>
+
+                <ul class="contact-list">
+                  <li>
+                    <div class="contact-label">E-Mail / Email</div>
+                    <div class="contact-main">
+                      <a href="mailto:deine.email@example.com">
+                        deine.email@example.com
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="contact-label">LinkedIn</div>
+                    <div class="contact-main">
+                      <a href="#">
+                        LinkedIn-Profil (Platzhalter-Link, später ersetzen)
+                      </a>
+                    </div>
+                  </li>
+                  <li>
+                    <div class="contact-label">GitHub</div>
+                    <div class="contact-main">
+                      <a href="#">
+                        GitHub-Profil (Platzhalter-Link, später ersetzen)
+                      </a>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container footer-inner">
+          <p>
+            &copy; <span id="year">2026</span> <span data-lang="de">Dein Name</span
+            ><span class="sr-only" data-lang="en">Your Name</span>. Platzhalter für
+            Copyright/Impressum.
+          </p>
+          <p class="lang-toggle-hint">
+            Markup vorbereitet für spätere Sprachumschaltung (DE/EN) per JavaScript.
+          </p>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
