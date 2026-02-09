@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Über mich – Dein Name</title>
+    <meta
+      name="description"
+      content="Über mich – Kurzprofil von Dein Name mit Fokus und Schwerpunkten."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <div class="container site-header-inner">
+          <div class="identity">
+            <div class="avatar" aria-hidden="true"></div>
+            <div class="site-title-wrap">
+              <h1 class="site-title" data-lang="de">Dein Name</h1>
+              <h1 class="site-title sr-only" data-lang="en">Your Name</h1>
+              <p class="site-claim" data-lang="de">
+                Kurz-Claim auf Deutsch – z.&nbsp;B. Softwareentwickler mit Schwerpunkt Web.
+              </p>
+              <p class="site-claim" data-lang="en">
+                Short English tagline – e.g. software engineer focused on web development.
+              </p>
+            </div>
+          </div>
+          <nav aria-label="Hauptnavigation">
+            <ul>
+              <li><a href="index.html#about">Über mich</a></li>
+              <li><a href="experience.html">Erfahrung</a></li>
+              <li><a href="education.html">Ausbildung</a></li>
+              <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <main class="site-main">
+        <div class="container">
+          <div class="sections">
+            <section
+              id="about"
+              aria-labelledby="about-heading"
+              class="section-card"
+            >
+              <div class="section-header">
+                <h2 id="about-heading">Über mich / About me</h2>
+                <span class="lang-label-pill">DE / EN</span>
+              </div>
+              <div class="section-body">
+                <p class="section-intro" data-lang="de">
+                  Kurze Zusammenfassung deiner Person auf Deutsch. 3–4 Sätze, die dich,
+                  deinen Hintergrund und deine Schwerpunkte beschreiben.
+                </p>
+                <p class="lang-note" data-lang="en">
+                  Short English summary about you. 3–4 sentences that explain who you are,
+                  your background and your focus areas.
+                </p>
+              </div>
+            </section>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="container footer-inner">
+          <p>
+            &copy; <span id="year">2026</span> <span data-lang="de">Dein Name</span
+            ><span class="sr-only" data-lang="en">Your Name</span>. Platzhalter für
+            Copyright/Impressum.
+          </p>
+          <p class="lang-toggle-hint">
+            Markup vorbereitet für spätere Sprachumschaltung (DE/EN) per JavaScript.
+          </p>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
